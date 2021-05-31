@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+		<!-- Bootstrap CSS -->
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+			crossorigin="anonymous"
+		/>
+
+		<link rel="preconnect" href="https://fonts.gstatic.com" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100;0,200;0,300;0,400;1,100;1,200;1,300&display=swap"
+			rel="stylesheet"
+		/>
+		<style type="text/css">
+			body {
+				font-family: "JetBrains Mono", monospace;
+				background-color: #eee;
+			}
+
+			h1 {
+				text-transform: uppercase;
+				margin-bottom : 20px;
+			}
+			.container {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				flex-direction: column;
+				min-height: 100vh;
+			}
+			form {
+				background-color: white;
+				padding: 1rem;
+				border-radius: 5px;
+			}
+		</style>
+		<title>Image Compare</title>
+	</head>
+	<body>
+		<div class="container">
+			<h1>Comprare Images</h1>
+
+			<form enctype="multipart/form-data" method="post">
+				{% csrf_token %}
+				<div class="row">
+					<div class="col-lg-6">
+						<label>First Image</label>
+
+						<input
+							class="form-control"
+							type="file"
+							name="img_1"
+							id="img_1"
+						/>
+					</div>
+					<div class="col-lg-6">
+						<label>Second Images</label>
+						<input
+							class="form-control"
+							type="file"
+							name="img_2"
+							id="img_2"
+						/>
+					</div>
+				</div>
+
+				{% if result %}
+				<div class="progress my-4" style="height: 20px">
+					<div
+						class="progress-bar bg-info"
+						role="progressbar"
+						style="width: {{ result }}%"
+						aria-valuenow="{{"
+						result
+						}}
+						aria-valuemin="0"
+						aria-valuemax="100"
+					></div>
+				</div>
+				{% endif %}
+					{% for message in messages %}
+				
+					<div
+						class="alert alert-{{ message.tags }} my-4 ml-0 alert-dismissible fade show"
+						role="alert"
+					>
+						{{  message }}
+						<button
+							type="button"
+							class="btn-close"
+							data-bs-dismiss="alert"
+							aria-label="Close"
+						></button>
+					</div>
+					{% endfor %}
+			<div class="d-flex justify-content-end align-items-end">
+					<button
+						class="mt-4 btn-lg btn-primary btn"
+						type="submit"
+						class="btn btn-primary"
+					>
+						Compare
+					</button>
+				</div>
+			</form>
+		</div>
+
+		<!-- Bootstrap Bundle with Popper -->
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+			crossorigin="anonymous"
+		></script>
+	</body>
+</html>
